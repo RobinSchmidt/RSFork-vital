@@ -128,6 +128,12 @@ messed up envelope drawing remains...there is a click on strat up and then no so
 closing it, we get an access violation. OK - I have reverted these changes in the project via git 
 again. Maybe I should create a new build configuration myself...but maybe not in VS but in Projucer.
 
+OK - let's try something else. Maybe the CPU frying is due to ceratin assertions that happen in the 
+debug build? It seems like VITAL_ASSERT( vital::utils::isFinite(...) ) is used a lot in assertions. 
+The implementation of isFinite is in poly_utils.h, line 420 and the VITAL_ASSERT macro is defined in 
+common.h, line 22ff. Replacing the VITAL_ASSERT macro by an empty macro does indeed help to lower 
+the CPU usage - but it's still not playable. ...aand we get an access violation on closing it.
+
 
 ----------------------------------------------------------------------------------------------------
 Questions:
