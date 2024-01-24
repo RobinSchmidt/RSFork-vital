@@ -62,7 +62,42 @@ that says:
 
   ...ipps.dll was not found...  
 
-Puuhh...this is fucking fiddly... I need a break....TBC...
+This file is located in:
+
+  C:\Program Files (x86)\Intel\oneAPI\ipp\2021.10\bin
+
+Placing a copy next to the executable Vial.exe does *not* solve it. We seem to also need: 
+
+  ippcore.dll
+
+After copying that file into the directory of Vial.exe, too, we get the following message that says 
+some more dlls are needed - some of them apparently optional:
+
+  ippsl9.dll (the most suitable for your CPU)
+  ippse9.dll (optional), 
+  ippsy8.dll (optional), 
+  ippsn8.dll (optional), 
+  ippsm7.dll (optional)
+
+They can all be found in the same folder as ipps.dll. I copied them all over into the directory 
+where vial.exe resides. Now it seems to be possible to run the standalone version. ...But it is not
+really playable. It apparently immediately fries the CPU even with the simple sawtooth init patch.
+The standalone version seems to be a sort of real standalone version as opposed to the 
+"standalone-plugin" versions that can be built from the
+
+  plugin/builds/...
+
+versions. It doesn't have the additional "Options" button that is provided by juce for the 
+"standalone-plugin" version.
+
+Seeing that the debug build apparently has CPU performance problems, let's try to build it in the
+"Release" configuration instead. ...the release version does not build at all - it complains about 
+things related to "firebase"
+
+
+...puuhh...this is really fiddly and frustrating... I need a break....TBC...
+
+
 
 
 
