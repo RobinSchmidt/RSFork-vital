@@ -1,3 +1,6 @@
+The Vital codebase has no embedded documentation - no doxygen stuff and very sparse comments. I'll 
+try to wrap my head around it anyway...
+
 ----------------------------------------------------------------------------------------------------
 Types:
 
@@ -16,3 +19,32 @@ Functions:
 vital::utils
 Is a namespace with various utility functions for conversion of units, interpolation, checking
 conditions on variables, etc.
+
+----------------------------------------------------------------------------------------------------
+Framework:
+
+vital::Processor (processor.h, line 128)
+Appears to be the baseclass for all audio signal processing modules like oscillators, filters, 
+modulators, effects, etc.
+
+vital::Output (processor.h, line 30)
+A struct that holds a buffer of poly_float values and has a pointer to a Processor which is the 
+owner of the Output.
+
+vital::Input (processor.h, line 86)
+A struct that has as its only data member a pointer to a vital::Output which is the source of the 
+Input.
+
+vital::ProcessorState (processor.h, line 99)
+A struct with some status variables like sample_rate, control_rate etc.
+
+vital::ProcessorRouter (processor_router.h, line 30)
+Subclass of vital::Processor. Apparently, a class to wire together several processors and treat the
+resulting patchwork as one processor - like in the "composite" GoF design pattern, I guess.
+
+vital::SynthModule (synth_module.h, line 74)
+Subclass of vital::ProcessorRouter...TBC...
+
+ModuleData (synth_module.h, line 57)
+A struct that has a std::vector<Processor*> and a std::vector<SynthModule> and some other stuff. 
+...TBC...
