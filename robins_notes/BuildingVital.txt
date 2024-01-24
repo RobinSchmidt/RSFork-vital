@@ -135,19 +135,6 @@ defined in common.h, line 22ff. Replacing the VITAL_ASSERT macro by an empty mac
 to lower the CPU usage a bit - but it's still not playable. ...and we get an access violation on 
 closing it.
 
-
-
-----------------------------------------------------------------------------------------------------
-Notes about the code:
-
-mono_float is a typedef'd alias for float and poly_float appears to be the abstraction for simd 
-vectors where the size is determined at compile-time according to macros like VITAL_SSE2, 
-VITAL_AVX2, VITAL_NEON. It seems like one of these 3 macros *must* be defined. There is no fallback
-to scalar code when none of them is defined - it probably just won't compile (I didn't try).
-
-
-move to extra file
-
 ----------------------------------------------------------------------------------------------------
 Questions:
 

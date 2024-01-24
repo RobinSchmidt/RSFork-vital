@@ -1,0 +1,18 @@
+----------------------------------------------------------------------------------------------------
+Types:
+
+vital::mono_float: 
+A typedef'd alias for float 
+
+vital::poly_float: 
+Appears to be the abstraction for simd vectors where the size is determined at compile-time 
+according to macros like VITAL_SSE2, VITAL_AVX2, VITAL_NEON. It seems like one of these 3 macros 
+*must* be defined. There is no fallback to scalar code when none of them is defined - it probably 
+just won't compile (I didn't try).
+
+----------------------------------------------------------------------------------------------------
+Functions:
+
+vital::utils
+Is a namespace with various utility functions for conversion of units, interpolation, checking
+conditions on variables, etc.
