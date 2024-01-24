@@ -1,0 +1,7 @@
+Vital seems to optionally use the Intel Performance Primitives (IPP) library for the FFT with an
+option to fall back to KissFFT when IPP is not available. So, to build Vital, one must either 
+install the IPP library or tweak the compilation settings in the .jucer file to set some INTEL_IPP=1 
+preprocessor macro to INTEL_IPP=0 and then re-generate the project files for all the IDEs like 
+Visual Studio etc. Installers (online and offline) for IPP can be obtained from here:
+
+https://www.intel.com/content/www/us/en/developer/articles/tool/oneapi-standalone-components.html#ipp
