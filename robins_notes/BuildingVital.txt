@@ -4,4 +4,44 @@ install the IPP library or tweak the compilation settings in the .jucer file to 
 preprocessor macro to INTEL_IPP=0 and then re-generate the project files for all the IDEs like 
 Visual Studio etc. Installers (online and offline) for IPP can be obtained from here:
 
-https://www.intel.com/content/www/us/en/developer/articles/tool/oneapi-standalone-components.html#ipp
+  https://www.intel.com/content/www/us/en/developer/articles/tool/oneapi-standalone-components.html#ipp
+
+The offline installer for Windows will by default install the IPP into:
+
+  C:\Program Files (x86)\Intel\oneAPI
+
+It says so on the installer page where one may or may not consent to the collection of information 
+in the bottom left corner where it says: "Installation Location".
+
+After installing IPP, double-click on (in e.g. Windows Explorer):
+
+  standalone/builds/vs19/Vial.sln
+
+to fire up Visual Studio 2019 with the Vial solution (yeah - I guess that was a typo?). The solution 
+contains one project called Vial_App. Trying to build it did *not* succeed out of the box. The 
+compiler complained with the error message:
+
+  Cannot open include file: 'ipps.h'
+
+Apparently, the compiler doesn't know the include path for the header file. After installing IPP, it 
+is located in:
+
+  C:\Program Files (x86)\Intel\oneAPI\ipp\2021.10\include\ipp
+
+on my machine. This path must be added to the compiler search paths. This can be done in the jucer 
+file (which requires re-generating the IDE project files) or directly in Visual Studio like so:
+
+  right-click on Vial_App -> Properties -> C/C++ -> General -> Additional Include Directories
+
+before navigating there, make sure to have "Configuration: All Configurations" selected in the top 
+left. Click on the button that appears to the right of the line, go to "Edit". Add a new line at the 
+bottom with the path given above. This should fix the compiler error but now we get linker errors of 
+the kind:
+
+  unresolved external symbol
+
+related to IPP functions. Apparently, the linker doesn't know where to find the precompiled library 
+files for IPP.
+
+...TBC...
+
