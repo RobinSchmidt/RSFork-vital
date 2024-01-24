@@ -129,11 +129,24 @@ closing it, we get an access violation. OK - I have reverted these changes in th
 again. Maybe I should create a new build configuration myself...but maybe not in VS but in Projucer.
 
 OK - let's try something else. Maybe the CPU frying is due to ceratin assertions that happen in the 
-debug build? It seems like VITAL_ASSERT( vital::utils::isFinite(...) ) is used a lot in assertions. 
-The implementation of isFinite is in poly_utils.h, line 420 and the VITAL_ASSERT macro is defined in 
-common.h, line 22ff. Replacing the VITAL_ASSERT macro by an empty macro does indeed help to lower 
-the CPU usage - but it's still not playable. ...aand we get an access violation on closing it.
+debug build? It seems like VITAL_ASSERT( vital::utils::isFinite(...) ) is used a lot throughout the
+code. The implementation of isFinite is in poly_utils.h, line 420 and the VITAL_ASSERT macro is 
+defined in common.h, line 22ff. Replacing the VITAL_ASSERT macro by an empty macro does indeed help 
+to lower the CPU usage a bit - but it's still not playable. ...and we get an access violation on 
+closing it.
 
+
+
+----------------------------------------------------------------------------------------------------
+Notes about the code:
+
+mono_float is a typedef'd alias for float and poly_float appears to be the abstraction for simd 
+vectors where the size is determined at compile-time according to macros like VITAL_SSE2, 
+VITAL_AVX2, VITAL_NEON. It seems like one of these 3 macros *must* be defined. There is no fallback
+to scalar code when none of them is defined - it probably just won't compile (I didn't try).
+
+
+move to extra file
 
 ----------------------------------------------------------------------------------------------------
 Questions:
