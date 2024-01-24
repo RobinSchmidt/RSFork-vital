@@ -41,7 +41,38 @@ the kind:
   unresolved external symbol
 
 related to IPP functions. Apparently, the linker doesn't know where to find the precompiled library 
-files for IPP.
+files for IPP. They are located in:
+
+  C:\Program Files (x86)\Intel\oneAPI\ipp\2021.10\lib
+
+This path must be added to the linker search paths via navigating to:
+
+  right-click on Vial_App -> Properties -> Linker -> General -> Additional Library Directories
+
+again making sure that "Configuration: All Configurations" is selected. We need to also go to:
+
+  ...                                      Linker -> Input -> Additional Dependencies
+
+and add the line:
+
+  ipps.lib
+
+there. Now the project compiles an links. But when trying to start Vital, an error message pops up 
+that says:
+
+  ...ipps.dll was not found...  
+
+Puuhh...this is fucking fiddly... I need a break....TBC...
+
+
+
+----------------------------------------------------------------------------------------------------
+Questions:
+
+-What is this "firebase" stuff about? It's a precompiled third party library that the project links
+ to. There are some compiler flags in the .jucer file that seem to be able to switch off using that
+ library.  ->  Figure that out!
+
 
 ...TBC...
 
