@@ -102,6 +102,34 @@ things related to "firebase"
 
 
 ----------------------------------------------------------------------------------------------------
+Let's try to tweak the Debug version, which does compile, to include optimizations:
+
+Change
+
+  right-click on Vial_App -> Properties -> C/C++ -> General -> Debug Information Format
+
+from "Program Database (/Zi)" to "None" and
+
+  right-click on Vial_App -> Properties -> C/C++ -> Optimization -> Optimization
+
+from "Disabled (/Od)" to "Maximum Optimization (Favor Speed) (/O2)". That should turn it basically 
+into a "Release" configuration with respect to performance. When doing this and build and run it,
+we get a warning window saying:
+
+  "Assertion failed ... utils::isFinite(processor->output()->....) "
+
+and the drawing of ENV1 looks messed up. Trying "Optimizations (Favor Speed) (/Ox)" results in the 
+same behavior. Let's see, if we can disable the assertions. Try:
+
+  right-click on Vial_App -> Properties -> C/C++ -> Preprocessor Definitions
+
+and set DEBUG=0 and _DEBUG=0 (from DEBUG and _DEBUG). Aha - now the assertions disappear. But the 
+messed up envelope drawing remains...there is a click on strat up and then no sound...and when 
+closing it, we get an access violation. OK - I have reverted these changes in the project via git 
+again. Maybe I should create a new build configuration myself...but maybe not in VS but in Projucer.
+
+
+----------------------------------------------------------------------------------------------------
 Questions:
 
 -What is this "firebase" stuff about? It's a precompiled third party library that the project links
