@@ -1,0 +1,6 @@
+Maybe rename the forked repo to "vital". This can be done on GitHub: go to the repo 
+
+  -> Settings -> Repository name
+
+It seems uncommon to prepend a repo name with some meta-info about what fork it is. Nobody else does 
+that. Just check out all the other forks and the forks of surge.
