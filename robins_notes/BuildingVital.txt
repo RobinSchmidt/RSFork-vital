@@ -71,7 +71,7 @@ Placing a copy next to the executable Vial.exe does *not* solve it. We seem to a
   ippcore.dll
 
 After copying that file into the directory of Vial.exe, too, we get the following message that says 
-some more dlls are needed - some of them apparently optional:
+some more dlls are needed - some of them apparently optional (the error message says so):
 
   ippsl9.dll (the most suitable for your CPU)
   ippse9.dll (optional), 
@@ -80,7 +80,7 @@ some more dlls are needed - some of them apparently optional:
   ippsm7.dll (optional)
 
 They can all be found in the same folder as ipps.dll. I copied them all over into the directory 
-where vial.exe resides. Now it seems to be possible to run the standalone version. ...But it is not
+where vial.exe resides. Now it seems to be possible to run the standalone version - but it is not
 really playable. It apparently immediately fries the CPU even with the simple sawtooth init patch.
 The standalone version seems to be a sort of real standalone version as opposed to the 
 "standalone-plugin" versions that can be built from the
@@ -94,21 +94,17 @@ Seeing that the debug build apparently has CPU performance problems, let's try t
 "Release" configuration instead. ...the release version does not build at all - it complains about 
 things related to "firebase"
 
-
 ...puuhh...this is really fiddly and frustrating... I need a break....TBC...
 
-
-
-
-
 ----------------------------------------------------------------------------------------------------
-Let's try to tweak the Debug version, which does compile, to include optimizations:
+Instead of building the "Release" configuration (which doesn't compile), let's try to tweak the 
+"Debug" configuration (which does compile), to include optimizations:
 
-Change
+Change:
 
   right-click on Vial_App -> Properties -> C/C++ -> General -> Debug Information Format
 
-from "Program Database (/Zi)" to "None" and
+from "Program Database (/Zi)" to "None" and:
 
   right-click on Vial_App -> Properties -> C/C++ -> Optimization -> Optimization
 
@@ -124,7 +120,7 @@ same behavior. Let's see, if we can disable the assertions. Try:
   right-click on Vial_App -> Properties -> C/C++ -> Preprocessor Definitions
 
 and set DEBUG=0 and _DEBUG=0 (from DEBUG and _DEBUG). Aha - now the assertions disappear. But the 
-messed up envelope drawing remains...there is a click on strat up and then no sound...and when 
+messed up envelope drawing remains...there is a click on start up and then no sound...and when 
 closing it, we get an access violation. OK - I have reverted these changes in the project via git 
 again. Maybe I should create a new build configuration myself...but maybe not in VS but in Projucer.
 
@@ -132,8 +128,8 @@ OK - let's try something else. Maybe the CPU frying is due to ceratin assertions
 debug build? It seems like VITAL_ASSERT( vital::utils::isFinite(...) ) is used a lot throughout the
 code. The implementation of isFinite is in poly_utils.h, line 420 and the VITAL_ASSERT macro is 
 defined in common.h, line 22ff. Replacing the VITAL_ASSERT macro by an empty macro does indeed help 
-to lower the CPU usage a bit - but it's still not playable. ...and we get an access violation on 
-closing it.
+to lower the CPU usage a bit - but it's still not playable. ...and (unsurprisingly) we still get the 
+access violation on closing it.
 
 ----------------------------------------------------------------------------------------------------
 Questions:
